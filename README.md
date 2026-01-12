@@ -1,77 +1,124 @@
 # Movie Recommendation System
 
-A lightweight movie recommendation system built with Python that demonstrates loading a movies dataset and producing recommendations via the project's recommendation logic in `model.py`.
+Live demo: https://azjmxvrjtbvmrqkwv2wkdg.streamlit.app/
+This repository contains a small, deployable movie recommendation app built with Streamlit. The app loads `movies.csv`, vectorizes movie genres with TF–IDF, and recommends similar movies using cosine similarity.
 
-## Features
+## Live Demo
+- Streamlit app: https://azjmxvrjtbvmrqkwv2wkdg.streamlit.app/
 
-- Load movie metadata from `movies.csv`.
-- Provide movie recommendations using the algorithm implemented in `model.py`.
-- Simple web/interface layer via `app.py` for interactive exploration.
+## Screenshot
+![App screenshot](screenshots/screenshot.svg)
 
-## Repository Structure
+If you'd like, I can also:
+- Add a short automated test for `MovieRecommender`.
+- Create a small GIF or capture a real screenshot of the live app and replace the SVG.
+- Add a ready-to-deploy `Procfile` or `Dockerfile`.
+# Movie Recommendation System
 
-- `app.py` — Small web app or CLI entry point to run the project.
-- `model.py` — Recommendation logic and model utilities.
-- `movies.csv` — Dataset containing movie information used by the system.
-- `requirements.txt` — Python dependencies.
-- `README.md` — This file.
+Live demo: https://azjmxvrjtbvmrqkwv2wkdg.streamlit.app/
 
-## Requirements
+This repository contains a small, deployable movie recommendation app built with Streamlit. The app loads `movies.csv`, vectorizes movie genres with TF–IDF, and recommends similar movies using cosine similarity.
 
-- Python 3.8+ recommended
-- Install dependencies:
+## Live Demo
+
+- Streamlit app: https://azjmxvrjtbvmrqkwv2wkdg.streamlit.app/
+
+## Quick Start (local)
+
+1. Create and activate a virtual environment (recommended):
+
+```bash
+python -m venv .venv
+.\.venv\Scripts\activate
+```
+
+2. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Running the project
-
-1. Ensure dependencies are installed.
-2. Run the app:
+3. Run the Streamlit app:
 
 ```bash
-python app.py
+streamlit run app.py
 ```
 
-3. If `app.py` starts a web server, open the displayed URL (commonly http://localhost:5000) in your browser. If it's CLI-based, follow the prompts.
+4. Open http://localhost:8501 in your browser (Streamlit prints the URL in the terminal).
 
-## Using the Recommendation Model
+## How the app works
 
-- The core recommendation logic is in `model.py`. Open and inspect `model.py` to understand or modify the algorithm (content-based, collaborative, or hybrid).
-- `movies.csv` provides the input data. You can replace or extend it with your own dataset, keeping the same column headings.
+- The web UI is implemented in `app.py`. It creates a `MovieRecommender` instance and shows a movie selector; pressing **Recommend** shows similar titles.
+- Recommendation logic lives in `model.py` in the `MovieRecommender` class. Implementation summary:
+  - Loads the CSV at `movies.csv` (expects columns `title` and `genre`).
+  - Uses `TfidfVectorizer` on the `genre` column.
+  - Computes pairwise cosine similarity and returns the top N similar titles.
 
-## Example (Python snippet)
+## Dataset
+
+- File: `movies.csv`
+- Expected columns: `title`, `genre`.
+- Example rows from the included dataset:
+
+```
+title,genre
+Stranger Things,Science Fiction Thriller Horror
+Inception,Science Fiction Thriller
+The Matrix,Science Fiction Action
+Harry Potter and the Sorcerers Stone,Fantasy Adventure
+```
+
+Keep `movies.csv` in the repository root so `app.py` can load it directly.
+
+## Programmatic usage
+
+Use the `MovieRecommender` class from `model.py` in scripts or tests:
 
 ```python
-from model import recommend
+from model import MovieRecommender
 
-# Example: get 5 recommendations for movie id 42
-results = recommend(movie_id=42, k=5)
+recommender = MovieRecommender("movies.csv")
+results = recommender.recommend("Inception", top_n=5)
 print(results)
 ```
 
-Adjust the function call to match the API exposed by `model.py`.
+Parameters:
+- `movie_title` (str): exact movie title as shown in the `title` column.
+- `top_n` (int): number of recommendations to return (default 5).
 
-## Development Notes
+## Deployment (Streamlit Cloud)
 
-- Keep dataset files small while iterating for faster development.
-- If you add heavy models, consider saving artifacts and loading them at runtime instead of re-training on each run.
+1. Push this repository to GitHub.
+2. Go to https://streamlit.io/cloud (or the Streamlit Community Cloud) and create a new app.
+3. Select your GitHub repository, branch (e.g., `main`), and set the main file to `app.py`.
+4. Streamlit will use `requirements.txt` to install dependencies and deploy your app.
+
+## Improving recommendations
+
+- Expand features used for similarity (e.g., combine `genre` with `description`, `cast`, or metadata).
+- Use more advanced embeddings (word2vec, sentence-transformers) for richer semantic similarity.
+- Cache the TF–IDF matrix or precompute embeddings if dataset grows large.
+
+## Troubleshooting
+
+- If `movies.csv` is not found, ensure the file resides in the project root and that you run the app from the repository directory.
+- If you see import errors, confirm the virtual environment is active and `pip install -r requirements.txt` completed successfully.
+
+## Files
+
+- `app.py` — Streamlit UI and entrypoint.
+- `model.py` — `MovieRecommender` class (TF–IDF + cosine similarity).
+- `movies.csv` — Example dataset (columns: `title`, `genre`).
+- `requirements.txt` — Dependencies (`streamlit`, `pandas`, `scikit-learn`).
 
 ## Contributing
 
-Contributions are welcome. Open an issue or submit a pull request describing the change.
+Contributions welcome — open an issue or submit a pull request. Suggested improvements:
 
-## License
+- Add richer metadata and sample preprocessing pipeline.
+- Add unit tests for `MovieRecommender` behavior.
+- Provide Dockerfile or CI configuration for automated deployments.
 
-Add your preferred license here (e.g., MIT). If unsure, include a note and add a license later.
 
----
-
-If you'd like, I can also:
-
-- Add usage examples specific to the recommendation function in `model.py`.
-- Add a small screenshot or sample output block.
-- Create a requirements lock file or dev environment instructions.
 
 
