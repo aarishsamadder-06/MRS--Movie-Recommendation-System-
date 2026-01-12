@@ -6,11 +6,6 @@ This repository contains a small, deployable movie recommendation app built with
 ## Screenshot
 ![App screenshot](screenshots/screenshot.svg)
 
-If you'd like, I can also:
-- Add a short automated test for `MovieRecommender`.
-- Create a small GIF or capture a real screenshot of the live app and replace the SVG.
-- Add a ready-to-deploy `Procfile` or `Dockerfile`.
-
 ## Quick Start (local)
 
 1. Create and activate a virtual environment (recommended):
