@@ -5,9 +5,17 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 class MovieRecommender:
     def __init__(self, data_path):
+        # Load dataset
         self.df = pd.read_csv(data_path)
+
+        # Preprocess genres
+        self.df["genre"] = self.df["genre"].fillna("")
+
+        # TF-IDF Vectorization
         self.vectorizer = TfidfVectorizer(stop_words="english")
         self.tfidf_matrix = self.vectorizer.fit_transform(self.df["genre"])
+
+        # Compute cosine similarity matrix
         self.similarity_matrix = cosine_similarity(self.tfidf_matrix)
 
     def recommend(self, movie_title, top_n=5):
