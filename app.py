@@ -3,7 +3,7 @@ import pandas as pd
 import os
 from model import MovieRecommender
 
-# ---------- CONFIG ----------
+# Configuration
 st.set_page_config(page_title="Movie Recommender", layout="wide")
 
 def load_css():
@@ -12,22 +12,22 @@ def load_css():
 
 load_css()
 
-# ---------- FILE PATHS ----------
+# File paths
 BASE_DIR = os.path.dirname(__file__)
 MOVIES_PATH = os.path.join(BASE_DIR, "movies.csv")
 USERS_PATH = os.path.join(BASE_DIR, "users.csv")
 FEEDBACK_PATH = os.path.join(BASE_DIR, "feedback.csv")
 
-# ---------- LOAD DATA ----------
+# Load data and model
 movies_df = pd.read_csv(MOVIES_PATH)
 recommender = MovieRecommender(MOVIES_PATH)
 
-# ---------- SESSION ----------
+# Session state for authentication
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
     st.session_state.user = ""
 
-# ---------- AUTH FUNCTIONS ----------
+# Authentication Functions
 def login(username, password):
     users = pd.read_csv(USERS_PATH)
     return ((users["username"] == username) & (users["password"] == password)).any()
@@ -40,7 +40,7 @@ def signup(username, password):
     users.to_csv(USERS_PATH, index=False)
     return True
 
-# ---------- UI ----------
+# UI
 st.title("🎬 Movie Recommendation System")
 
 if not st.session_state.logged_in:
@@ -69,7 +69,7 @@ if not st.session_state.logged_in:
 else:
     st.success(f"Welcome, {st.session_state.user} 👋")
 
-    # ---------- MOVIE SELECTION ----------
+    # Movie Selection and Recommendation
     selected_movie = st.selectbox("Choose a movie", movies_df["title"].tolist())
 
     if st.button("🎯 Recommend"):
@@ -90,7 +90,7 @@ else:
                     unsafe_allow_html=True
                 )
 
-    # ---------- FEEDBACK ----------
+    # Feedback Section
     st.subheader("💬 Feedback")
     feedback = st.text_area("Tell us what you think")
 
