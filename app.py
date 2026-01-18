@@ -91,7 +91,6 @@ else:
                 )
 
     # Feedback Section
-    # ---------- FEEDBACK ----------
 st.subheader("💬 Feedback")
 feedback = st.text_area("Tell us what you think")
 
