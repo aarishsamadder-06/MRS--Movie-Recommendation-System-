@@ -1,0 +1,22 @@
+body {
+    background: linear-gradient(135deg, #141E30, #243B55);
+    color: white;
+}
+
+h1, h2, h3 {
+    text-align: center;
+}
+
+.stButton > button {
+    background-color: #ff4b4b;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.movie-card {
+    background-color: #1f2933;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
