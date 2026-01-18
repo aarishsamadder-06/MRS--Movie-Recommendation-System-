@@ -91,16 +91,19 @@ else:
                 )
 
     # Feedback Section
-    st.subheader("💬 Feedback")
-    feedback = st.text_area("Tell us what you think")
+    # ---------- FEEDBACK ----------
+st.subheader("💬 Feedback")
+feedback = st.text_area("Tell us what you think")
 
-    if st.button("Submit Feedback"):
+if st.button("Submit Feedback"):
+    if os.path.exists(FEEDBACK_PATH) and os.path.getsize(FEEDBACK_PATH) > 0:
         df = pd.read_csv(FEEDBACK_PATH)
-        df.loc[len(df)] = [st.session_state.user, feedback]
-        df.to_csv(FEEDBACK_PATH, index=False)
-        st.success("Thanks for your feedback ❤️")
+    else:
+        df = pd.DataFrame(columns=["username", "feedback"])
 
-    if st.button("Logout"):
-        st.session_state.logged_in = False
-        st.experimental_rerun()
+    df.loc[len(df)] = [st.session_state.user, feedback]
+    df.to_csv(FEEDBACK_PATH, index=False)
+
+    st.success("Thanks for your feedback ❤️")
+
 
