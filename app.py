@@ -53,7 +53,7 @@ if not st.session_state.logged_in:
             if login(u, p):
                 st.session_state.logged_in = True
                 st.session_state.user = u
-                st.experimental_rerun()
+                st.rerun()
             else:
                 st.error("Invalid credentials")
 
