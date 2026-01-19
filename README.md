@@ -1,4 +1,4 @@
-# Movie Recommendation System
+# MRS-Movie Recommendation System
 
 Live demo: [https://azjmxvrjtbvmrqkwv2wkdg.streamlit.app/](https://azjmxvrjtbvmrqkwv2wkdg.streamlit.app/)
 
