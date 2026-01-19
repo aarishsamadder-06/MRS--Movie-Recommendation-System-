@@ -12,17 +12,17 @@ def load_css():
 
 load_css()
 
-# File paths
+# File Paths
 BASE_DIR = os.path.dirname(__file__)
 MOVIES_PATH = os.path.join(BASE_DIR, "movies.csv")
 USERS_PATH = os.path.join(BASE_DIR, "users.csv")
 FEEDBACK_PATH = os.path.join(BASE_DIR, "feedback.csv")
 
-# Load data and model
+# Load Data And Model
 movies_df = pd.read_csv(MOVIES_PATH)
 recommender = MovieRecommender(MOVIES_PATH)
 
-# Session state for authentication
+# Session State For Authentication
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
     st.session_state.user = ""
@@ -69,7 +69,7 @@ if not st.session_state.logged_in:
 else:
     st.success(f"Welcome, {st.session_state.user} 👋")
 
-    # Movie Selection and Recommendation
+    # Movie Selection And Recommendation
     selected_movie = st.selectbox("Choose a movie", movies_df["title"].tolist())
 
     if st.button("🎯 Recommend"):
