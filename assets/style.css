@@ -1,11 +1,5 @@
-/* ═══════════════════════════════════════════════════
-   CINESCOPE — Premium Movie Recommender UI
-   Dark cinematic theme with film-noir atmosphere
-   ═══════════════════════════════════════════════════ */
-
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap');
 
-/* ── CSS Variables ── */
 :root {
   --noir-black:    #0a0a0f;
   --noir-deep:     #0f0f1a;
@@ -23,7 +17,6 @@
   --film-grain:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
-/* ── Global Reset & Base ── */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -34,7 +27,6 @@ html, body, [data-testid="stAppViewContainer"] {
   font-family: 'Crimson Pro', Georgia, serif !important;
 }
 
-/* Film grain overlay on the whole app */
 [data-testid="stAppViewContainer"]::before {
   content: '';
   position: fixed;
@@ -47,17 +39,14 @@ html, body, [data-testid="stAppViewContainer"] {
   mix-blend-mode: overlay;
 }
 
-/* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--noir-deep); }
 ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
 
-/* ── Hide Streamlit chrome ── */
 #MainMenu, footer, header { visibility: hidden !important; }
 [data-testid="stToolbar"] { display: none !important; }
 [data-testid="stDecoration"] { display: none !important; }
 
-/* ── Main container ── */
 [data-testid="stMain"] > div {
   padding-top: 0 !important;
 }
@@ -68,7 +57,6 @@ html, body, [data-testid="stAppViewContainer"] {
   background: transparent !important;
 }
 
-/* ── Cinematic Header Strip ── */
 [data-testid="stAppViewContainer"] > section:first-child::before {
   content: '';
   display: block;
@@ -77,7 +65,6 @@ html, body, [data-testid="stAppViewContainer"] {
   margin-bottom: 0;
 }
 
-/* ── App Title ── */
 h1 {
   font-family: 'Bebas Neue', sans-serif !important;
   font-size: clamp(2.8rem, 6vw, 5rem) !important;
@@ -105,7 +92,6 @@ h1::after {
   margin-top: 0.3em;
 }
 
-/* ── Headings ── */
 h2 {
   font-family: 'Bebas Neue', sans-serif !important;
   font-size: 1.8rem !important;
@@ -124,7 +110,6 @@ h3 {
   font-size: 1.3rem !important;
 }
 
-/* ── Tabs ── */
 [data-testid="stTabs"] {
   background: var(--noir-panel) !important;
   border-radius: 12px !important;
@@ -165,7 +150,6 @@ h3 {
   border-color: var(--gold) !important;
 }
 
-/* ── Input Fields ── */
 [data-testid="stTextInput"] input,
 [data-testid="stTextInput"] input:focus {
   background: var(--noir-deep) !important;
@@ -193,7 +177,6 @@ h3 {
   text-transform: uppercase !important;
 }
 
-/* ── Select Box ── */
 [data-testid="stSelectbox"] > div > div {
   background: var(--noir-deep) !important;
   color: var(--white) !important;
@@ -216,7 +199,6 @@ h3 {
   text-transform: uppercase !important;
 }
 
-/* Dropdown options panel */
 [data-testid="stSelectbox"] ul,
 .stSelectbox [role="listbox"] {
   background: var(--noir-card) !important;
@@ -224,7 +206,6 @@ h3 {
   border-radius: 8px !important;
 }
 
-/* ── Text Area (Feedback) ── */
 [data-testid="stTextArea"] textarea {
   background: var(--noir-deep) !important;
   color: var(--white) !important;
@@ -251,7 +232,6 @@ h3 {
   text-transform: uppercase !important;
 }
 
-/* ── Buttons ── */
 .stButton > button {
   font-family: 'Bebas Neue', sans-serif !important;
   font-size: 1rem !important;
@@ -294,7 +274,6 @@ h3 {
   box-shadow: 0 2px 8px rgba(212, 168, 67, 0.3) !important;
 }
 
-/* ── Alert / Info / Success / Error ── */
 [data-testid="stAlert"] {
   border-radius: 8px !important;
   border-left: 3px solid var(--gold) !important;
@@ -307,12 +286,10 @@ h3 {
   background: var(--noir-card) !important;
 }
 
-/* success */
 div[data-testid="stAlert"] .st-emotion-cache-1ht1j0u {
   color: var(--gold) !important;
 }
 
-/* ── Movie Card ── */
 .movie-card {
   background: linear-gradient(160deg, var(--noir-card) 0%, var(--noir-panel) 100%);
   border: 1px solid var(--noir-border);
@@ -376,7 +353,6 @@ div[data-testid="stAlert"] .st-emotion-cache-1ht1j0u {
   text-transform: uppercase;
 }
 
-/* ── Dividers ── */
 hr {
   border: none !important;
   height: 1px !important;
@@ -384,13 +360,11 @@ hr {
   margin: 2rem 0 !important;
 }
 
-/* ── Columns ── */
 [data-testid="stHorizontalBlock"] {
   gap: 0.75rem !important;
   align-items: stretch !important;
 }
 
-/* ── Welcome Banner ── */
 .stSuccess {
   background: linear-gradient(135deg, rgba(212,168,67,0.08), rgba(212,168,67,0.03)) !important;
   border: 1px solid rgba(212,168,67,0.25) !important;
@@ -401,20 +375,17 @@ hr {
   font-style: italic !important;
 }
 
-/* ── Sidebar (if used) ── */
 [data-testid="stSidebar"] {
   background: var(--noir-panel) !important;
   border-right: 1px solid var(--noir-border) !important;
 }
 
-/* ── Subheader decoration ── */
 .stMarkdown h2::before {
   content: '▌ ';
   color: var(--crimson);
   font-size: 0.8em;
 }
 
-/* ── Animated entrance for the whole app ── */
 @keyframes fadeSlideUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -424,18 +395,15 @@ hr {
   animation: fadeSlideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* ── Ticket-tape decorative strip at top ── */
 [data-testid="stHeader"] {
   background: var(--noir-black) !important;
   border-bottom: 1px solid var(--noir-border) !important;
 }
 
-/* ── Spinner ── */
 [data-testid="stSpinner"] {
   color: var(--gold) !important;
 }
 
-/* ── Column labels (mono detail) ── */
 label, .stSelectbox label, .stTextInput label {
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -444,7 +412,6 @@ label, .stSelectbox label, .stTextInput label {
   color: var(--silver-dim) !important;
 }
 
-/* ── Recommendation section header ── */
 .recommendation-header {
   display: flex;
   align-items: center;
@@ -464,7 +431,6 @@ label, .stSelectbox label, .stTextInput label {
   background: linear-gradient(90deg, var(--gold-dim), transparent);
 }
 
-/* ── Glowing separator ── */
 .glow-line {
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--crimson) 70%, transparent 100%);
@@ -473,14 +439,12 @@ label, .stSelectbox label, .stTextInput label {
   border: none;
 }
 
-/* ── Feedback section ── */
 [data-testid="stTextArea"] {
   background: var(--noir-panel) !important;
   border-radius: 10px !important;
   padding: 0.5rem !important;
 }
 
-/* ── Tooltip / hover states ── */
 [title]:hover::after {
   background: var(--noir-card);
   color: var(--gold);
@@ -490,26 +454,22 @@ label, .stSelectbox label, .stTextInput label {
   font-size: 0.7rem;
 }
 
-/* ── Placeholder text ── */
 ::placeholder {
   color: var(--silver-dim) !important;
   font-style: italic !important;
   opacity: 0.6 !important;
 }
 
-/* ── Focus ring ── */
 :focus-visible {
   outline: 2px solid var(--gold) !important;
   outline-offset: 2px !important;
 }
 
-/* ── Selection ── */
 ::selection {
   background: var(--gold-glow) !important;
   color: var(--gold) !important;
 }
 
-/* ── Mobile tweaks ── */
 @media (max-width: 768px) {
   .main .block-container {
     padding: 1rem 1rem !important;
