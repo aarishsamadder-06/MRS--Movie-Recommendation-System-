@@ -1,22 +1,529 @@
-body {
-    background: linear-gradient(135deg, #141E30, #243B55);
-    color: white;
+/* ═══════════════════════════════════════════════════
+   CINESCOPE — Premium Movie Recommender UI
+   Dark cinematic theme with film-noir atmosphere
+   ═══════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap');
+
+/* ── CSS Variables ── */
+:root {
+  --noir-black:    #0a0a0f;
+  --noir-deep:     #0f0f1a;
+  --noir-panel:    #14141f;
+  --noir-card:     #1a1a28;
+  --noir-border:   #2a2a3e;
+  --gold:          #d4a843;
+  --gold-dim:      #a07820;
+  --gold-glow:     rgba(212, 168, 67, 0.15);
+  --crimson:       #c0392b;
+  --crimson-glow:  rgba(192, 57, 43, 0.2);
+  --silver:        #a8adc0;
+  --silver-dim:    #6b7089;
+  --white:         #f0eee8;
+  --film-grain:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
-h1, h2, h3 {
-    text-align: center;
+/* ── Global Reset & Base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
+html, body, [data-testid="stAppViewContainer"] {
+  background-color: var(--noir-black) !important;
+  color: var(--white) !important;
+  font-family: 'Crimson Pro', Georgia, serif !important;
+}
+
+/* Film grain overlay on the whole app */
+[data-testid="stAppViewContainer"]::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: var(--film-grain);
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.6;
+  mix-blend-mode: overlay;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--noir-deep); }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+/* ── Hide Streamlit chrome ── */
+#MainMenu, footer, header { visibility: hidden !important; }
+[data-testid="stToolbar"] { display: none !important; }
+[data-testid="stDecoration"] { display: none !important; }
+
+/* ── Main container ── */
+[data-testid="stMain"] > div {
+  padding-top: 0 !important;
+}
+
+.main .block-container {
+  max-width: 1100px !important;
+  padding: 2rem 2.5rem !important;
+  background: transparent !important;
+}
+
+/* ── Cinematic Header Strip ── */
+[data-testid="stAppViewContainer"] > section:first-child::before {
+  content: '';
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--crimson), var(--gold), transparent);
+  margin-bottom: 0;
+}
+
+/* ── App Title ── */
+h1 {
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: clamp(2.8rem, 6vw, 5rem) !important;
+  letter-spacing: 0.12em !important;
+  text-align: center !important;
+  background: linear-gradient(135deg, var(--gold) 0%, #f0d080 40%, var(--gold) 70%, var(--gold-dim) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-shadow: none !important;
+  margin-bottom: 0.1em !important;
+  line-height: 1 !important;
+  position: relative;
+}
+
+h1::after {
+  content: 'DISCOVER YOUR NEXT OBSESSION';
+  display: block;
+  font-family: 'DM Mono', monospace !important;
+  font-size: 0.18em !important;
+  letter-spacing: 0.5em !important;
+  color: var(--silver-dim) !important;
+  -webkit-text-fill-color: var(--silver-dim) !important;
+  text-align: center;
+  margin-top: 0.3em;
+}
+
+/* ── Headings ── */
+h2 {
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: 1.8rem !important;
+  letter-spacing: 0.1em !important;
+  color: var(--gold) !important;
+  border-bottom: 1px solid var(--noir-border) !important;
+  padding-bottom: 0.4em !important;
+  margin-top: 1.5em !important;
+}
+
+h3 {
+  font-family: 'Crimson Pro', serif !important;
+  font-style: italic !important;
+  font-weight: 300 !important;
+  color: var(--silver) !important;
+  font-size: 1.3rem !important;
+}
+
+/* ── Tabs ── */
+[data-testid="stTabs"] {
+  background: var(--noir-panel) !important;
+  border-radius: 12px !important;
+  padding: 0.5rem !important;
+  border: 1px solid var(--noir-border) !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,168,67,0.05) !important;
+}
+
+[data-testid="stTabs"] [role="tablist"] {
+  background: transparent !important;
+  gap: 0.25rem !important;
+  border-bottom: 1px solid var(--noir-border) !important;
+  padding-bottom: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+[data-testid="stTabs"] button[role="tab"] {
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.12em !important;
+  color: var(--silver-dim) !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 6px !important;
+  padding: 0.5rem 1.5rem !important;
+  transition: all 0.25s ease !important;
+}
+
+[data-testid="stTabs"] button[role="tab"]:hover {
+  color: var(--gold) !important;
+  border-color: var(--gold-dim) !important;
+  background: var(--gold-glow) !important;
+}
+
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+  color: var(--noir-black) !important;
+  background: var(--gold) !important;
+  border-color: var(--gold) !important;
+}
+
+/* ── Input Fields ── */
+[data-testid="stTextInput"] input,
+[data-testid="stTextInput"] input:focus {
+  background: var(--noir-deep) !important;
+  color: var(--white) !important;
+  border: 1px solid var(--noir-border) !important;
+  border-radius: 8px !important;
+  font-family: 'Crimson Pro', serif !important;
+  font-size: 1.05rem !important;
+  padding: 0.6rem 1rem !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  caret-color: var(--gold) !important;
+}
+
+[data-testid="stTextInput"] input:focus {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px var(--gold-glow), 0 4px 20px rgba(0,0,0,0.3) !important;
+  outline: none !important;
+}
+
+[data-testid="stTextInput"] label {
+  font-family: 'DM Mono', monospace !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.2em !important;
+  color: var(--silver-dim) !important;
+  text-transform: uppercase !important;
+}
+
+/* ── Select Box ── */
+[data-testid="stSelectbox"] > div > div {
+  background: var(--noir-deep) !important;
+  color: var(--white) !important;
+  border: 1px solid var(--noir-border) !important;
+  border-radius: 8px !important;
+  font-family: 'Crimson Pro', serif !important;
+  font-size: 1.05rem !important;
+  transition: border-color 0.2s ease !important;
+}
+
+[data-testid="stSelectbox"] > div > div:hover {
+  border-color: var(--gold) !important;
+}
+
+[data-testid="stSelectbox"] label {
+  font-family: 'DM Mono', monospace !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.2em !important;
+  color: var(--silver-dim) !important;
+  text-transform: uppercase !important;
+}
+
+/* Dropdown options panel */
+[data-testid="stSelectbox"] ul,
+.stSelectbox [role="listbox"] {
+  background: var(--noir-card) !important;
+  border: 1px solid var(--gold-dim) !important;
+  border-radius: 8px !important;
+}
+
+/* ── Text Area (Feedback) ── */
+[data-testid="stTextArea"] textarea {
+  background: var(--noir-deep) !important;
+  color: var(--white) !important;
+  border: 1px solid var(--noir-border) !important;
+  border-radius: 8px !important;
+  font-family: 'Crimson Pro', serif !important;
+  font-size: 1.05rem !important;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+  caret-color: var(--gold) !important;
+  resize: vertical !important;
+}
+
+[data-testid="stTextArea"] textarea:focus {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px var(--gold-glow) !important;
+  outline: none !important;
+}
+
+[data-testid="stTextArea"] label {
+  font-family: 'DM Mono', monospace !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.2em !important;
+  color: var(--silver-dim) !important;
+  text-transform: uppercase !important;
+}
+
+/* ── Buttons ── */
 .stButton > button {
-    background-color: #ff4b4b;
-    color: white;
-    border-radius: 8px;
-    font-size: 16px;
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.18em !important;
+  color: var(--noir-black) !important;
+  background: linear-gradient(135deg, var(--gold) 0%, #e8b84b 50%, var(--gold-dim) 100%) !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 0.6rem 1.8rem !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+  box-shadow: 0 4px 15px rgba(212, 168, 67, 0.3), inset 0 1px 0 rgba(255,255,255,0.2) !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
+.stButton > button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: rgba(255,255,255,0.15);
+  transform: skewX(-20deg);
+  transition: left 0.4s ease;
+}
+
+.stButton > button:hover::before {
+  left: 120%;
+}
+
+.stButton > button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(212, 168, 67, 0.45), inset 0 1px 0 rgba(255,255,255,0.25) !important;
+}
+
+.stButton > button:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 8px rgba(212, 168, 67, 0.3) !important;
+}
+
+/* ── Alert / Info / Success / Error ── */
+[data-testid="stAlert"] {
+  border-radius: 8px !important;
+  border-left: 3px solid var(--gold) !important;
+  background: var(--noir-card) !important;
+  font-family: 'Crimson Pro', serif !important;
+  font-size: 1rem !important;
+}
+
+[data-testid="stAlert"][data-baseweb="notification"] {
+  background: var(--noir-card) !important;
+}
+
+/* success */
+div[data-testid="stAlert"] .st-emotion-cache-1ht1j0u {
+  color: var(--gold) !important;
+}
+
+/* ── Movie Card ── */
 .movie-card {
-    background-color: #1f2933;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 10px;
+  background: linear-gradient(160deg, var(--noir-card) 0%, var(--noir-panel) 100%);
+  border: 1px solid var(--noir-border);
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  cursor: default;
+}
+
+.movie-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(160deg, rgba(212,168,67,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.movie-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 0 1px var(--gold-dim), 0 0 30px var(--gold-glow);
+  border-color: var(--gold-dim);
+}
+
+.movie-card img {
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid var(--noir-border);
+  filter: saturate(0.8) contrast(1.1);
+  transition: filter 0.3s ease;
+}
+
+.movie-card:hover img {
+  filter: saturate(1) contrast(1.1);
+}
+
+.movie-card p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--white);
+  margin: 0;
+  padding: 0.7rem 0.9rem 0.8rem;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.movie-card .genre-tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  background: var(--gold-glow);
+  border: 1px solid rgba(212,168,67,0.2);
+  border-radius: 3px;
+  padding: 0.15rem 0.45rem;
+  margin: 0 0.9rem 0.7rem;
+  text-transform: uppercase;
+}
+
+/* ── Dividers ── */
+hr {
+  border: none !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, var(--noir-border), transparent) !important;
+  margin: 2rem 0 !important;
+}
+
+/* ── Columns ── */
+[data-testid="stHorizontalBlock"] {
+  gap: 0.75rem !important;
+  align-items: stretch !important;
+}
+
+/* ── Welcome Banner ── */
+.stSuccess {
+  background: linear-gradient(135deg, rgba(212,168,67,0.08), rgba(212,168,67,0.03)) !important;
+  border: 1px solid rgba(212,168,67,0.25) !important;
+  border-left: 3px solid var(--gold) !important;
+  border-radius: 8px !important;
+  font-family: 'Crimson Pro', serif !important;
+  font-size: 1.1rem !important;
+  font-style: italic !important;
+}
+
+/* ── Sidebar (if used) ── */
+[data-testid="stSidebar"] {
+  background: var(--noir-panel) !important;
+  border-right: 1px solid var(--noir-border) !important;
+}
+
+/* ── Subheader decoration ── */
+.stMarkdown h2::before {
+  content: '▌ ';
+  color: var(--crimson);
+  font-size: 0.8em;
+}
+
+/* ── Animated entrance for the whole app ── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.main .block-container {
+  animation: fadeSlideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Ticket-tape decorative strip at top ── */
+[data-testid="stHeader"] {
+  background: var(--noir-black) !important;
+  border-bottom: 1px solid var(--noir-border) !important;
+}
+
+/* ── Spinner ── */
+[data-testid="stSpinner"] {
+  color: var(--gold) !important;
+}
+
+/* ── Column labels (mono detail) ── */
+label, .stSelectbox label, .stTextInput label {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.7rem !important;
+  font-family: 'DM Mono', monospace !important;
+  color: var(--silver-dim) !important;
+}
+
+/* ── Recommendation section header ── */
+.recommendation-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0 1rem;
+}
+
+.recommendation-header::before,
+.recommendation-header::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim));
+}
+
+.recommendation-header::after {
+  background: linear-gradient(90deg, var(--gold-dim), transparent);
+}
+
+/* ── Glowing separator ── */
+.glow-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--crimson) 70%, transparent 100%);
+  box-shadow: 0 0 8px var(--gold-glow);
+  margin: 2rem 0;
+  border: none;
+}
+
+/* ── Feedback section ── */
+[data-testid="stTextArea"] {
+  background: var(--noir-panel) !important;
+  border-radius: 10px !important;
+  padding: 0.5rem !important;
+}
+
+/* ── Tooltip / hover states ── */
+[title]:hover::after {
+  background: var(--noir-card);
+  color: var(--gold);
+  border: 1px solid var(--noir-border);
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+}
+
+/* ── Placeholder text ── */
+::placeholder {
+  color: var(--silver-dim) !important;
+  font-style: italic !important;
+  opacity: 0.6 !important;
+}
+
+/* ── Focus ring ── */
+:focus-visible {
+  outline: 2px solid var(--gold) !important;
+  outline-offset: 2px !important;
+}
+
+/* ── Selection ── */
+::selection {
+  background: var(--gold-glow) !important;
+  color: var(--gold) !important;
+}
+
+/* ── Mobile tweaks ── */
+@media (max-width: 768px) {
+  .main .block-container {
+    padding: 1rem 1rem !important;
+  }
+
+  h1 {
+    font-size: 2.5rem !important;
+  }
+
+  .movie-card p {
+    font-size: 0.8rem;
+  }
+
+  [data-testid="stHorizontalBlock"] {
+    flex-wrap: wrap !important;
+  }
 }
