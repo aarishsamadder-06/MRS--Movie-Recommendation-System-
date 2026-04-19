@@ -5,8 +5,7 @@ Live demo: [https://azjmxvrjtbvmrqkwv2wkdg.streamlit.app/](https://azjmxvrjtbvmr
 This repository contains a small, deployable movie recommendation app built with Streamlit. The app loads `movies.csv`, vectorizes movie genres with TF–IDF, and recommends similar movies using cosine similarity.
 
 ## Screenshot
-<img width="1796" height="803" alt="Screenshot 2026-01-18 231020" src="https://github.com/user-attachments/assets/49e31fa4-4e61-4f82-a930-28c8540ab6cb" />
-
+![Movie Recommendation System Interface](assets/screenshot.png)
 
 
 ## Quick Start (local)
